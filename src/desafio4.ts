@@ -10,13 +10,104 @@
 // Atenção para o listener do botão login-button que devolve o sessionID do usuário
 // É necessário fazer um cadastro no https://www.themoviedb.org/ e seguir a documentação do site para entender como gera uma API key https://developers.themoviedb.org/3/getting-started/introduction
 
-var apiKey = "3f301be7381a03ad8d352314dcc3ec1d";
-let apiKey;
-let requestToken;
-let username;
-let password;
-let sessionId;
-let listId = "7101979";
+interface Result {
+  poster_path: string;
+  adult: boolean;
+  overview: string;
+  release_date: string;
+  genre_ids: number[];
+  id: number;
+  original_title: string;
+  original_language: string;
+  title: string;
+  backdrop_path: string;
+  popularity: number;
+  vote_count: number;
+  video: boolean;
+  vote_average: number;
+}
+
+interface SearchMovieResponse {
+  page: number;
+  results: Result[];
+  total_results: number;
+  total_pages: number;
+}
+
+export interface Genre {
+  id: number;
+  name: string;
+}
+
+export interface ProductionCompany {
+  id: number;
+  logo_path: string;
+  name: string;
+  origin_country: string;
+}
+
+export interface ProductionCountry {
+  iso_3166_1: string;
+  name: string;
+}
+
+export interface SpokenLanguage {
+  iso_639_1: string;
+  name: string;
+}
+
+export interface AddMovieResponse {
+  adult: boolean;
+  backdrop_path: string;
+  belongs_to_collection?: any;
+  budget: number;
+  genres: Genre[];
+  homepage: string;
+  id: number;
+  imdb_id: string;
+  original_language: string;
+  original_title: string;
+  overview: string;
+  popularity: number;
+  poster_path?: any;
+  production_companies: ProductionCompany[];
+  production_countries: ProductionCountry[];
+  release_date: string;
+  revenue: number;
+  runtime: number;
+  spoken_languages: SpokenLanguage[];
+  status: string;
+  tagline: string;
+  title: string;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
+}
+
+interface AuthenticationBodyProps {
+  username: string;
+  password: string;
+  request_token: string;
+}
+
+interface ListBodyProps {
+  name?: string;
+  description?: string;
+  language?: string;
+  media_id?: number;
+}
+interface HttpClientGetProps {
+  url: string;
+  method: "GET" | "POST";
+  body?: null | ListBodyProps | AuthenticationBodyProps;
+}
+
+let apiKey: string = "3f301be7381a03ad8d352314dcc3ec1d";
+let requestToken: string;
+let username: string;
+let password: string;
+let sessionId: string;
+let listId: string = "7101979";
 
 let loginButton = document.getElementById("login-button");
 let searchButton = document.getElementById("search-button");
