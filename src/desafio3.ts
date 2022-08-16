@@ -1,25 +1,42 @@
 // O código abaixo tem alguns erros e não funciona como deveria. Você pode identificar quais são e corrigi-los em um arquivo TS?
 
-let botaoAtualizar = document.getElementById("atualizar-saldo");
-let botaoLimpar = document.getElementById("limpar-saldo");
-let soma = document.getElementById("soma");
-let campoSaldo = document.getElementById("campo-saldo");
+const botaoAtualizar = document.getElementById(
+  "atualizar-saldo"
+) as HTMLButtonElement;
+const botaoLimpar = document.getElementById(
+  "limpar-saldo"
+) as HTMLButtonElement;
+const soma = document.getElementById("soma") as HTMLInputElement;
+const campoSaldo = document.getElementById("campo-saldo") as HTMLSpanElement;
 
-campoSaldo.innerHTML = 0;
+let saldoTotal: number;
 
-function somarAoSaldo(soma) {
-  campoSaldo.innerHTML += soma;
+function limparCampoSoma() {
+  if (!soma) return;
+  soma.value = "";
+}
+
+function somarAoSaldo(soma: number) {
+  if (!campoSaldo) return;
+
+  saldoTotal += soma;
+  campoSaldo.innerHTML = saldoTotal.toString();
 }
 
 function limparSaldo() {
-  campoSaldo.innerHTML = "";
+  if (!campoSaldo) return;
+
+  saldoTotal = 0;
+  campoSaldo.innerHTML = saldoTotal.toString();
 }
 
-botaoAtualizar.addEventListener("click", function () {
-  somarAoSaldo(soma.value);
+limparSaldo();
+
+botaoAtualizar?.addEventListener("click", function () {
+  somarAoSaldo(Number(soma.value));
 });
 
-botaoLimpar.addEventListener("click", function () {
+botaoLimpar?.addEventListener("click", function () {
   limparSaldo();
 });
 
